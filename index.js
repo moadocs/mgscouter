@@ -109,8 +109,8 @@ async function func() {
             console.log(value)
             const memberLevel = value?.[value.indexOf('|')+1].slice(3)
             const memberJob = value?.[value.indexOf('|')-1]
-            const memberPower1 = value?.[value.indexOf('전투력')+3]
-            const memberPower2 = value?.[value.indexOf('헥사환산')+1]
+            const memberPower1 = value?.[value.indexOf('전투력')+3].replace(/ |만|억/g, "")
+            const memberPower2 = value?.[value.indexOf('헥사환산')+1].replace(/ |만|억/g, "")
             const memberPower3 = value?.[value.indexOf('보스 380')+6]
             const leveltag = document.getElementsByClassName(`level-${member}`)[0]
             const jobtag = document.getElementsByClassName(`job-${member}`)[0]
@@ -119,10 +119,20 @@ async function func() {
             const power3tag = document.getElementsByClassName(`power3-${member}`)[0]
             leveltag.innerText = memberLevel || ""
             jobtag.innerText = memberJob || ""
-            power1tag.innerText = memberPower1.replace(/ |만|억/g, "") || ""
-            power2tag.innerText = memberPower2.replace(/ |만|억/g, "")  || ""
+            power1tag.innerText = memberPower1 || ""
+            power2tag.innerText = memberPower2  || ""
             power3tag.innerText = memberPower3 || ""
+            localStorage.setItem(member, [memberLevel, memberJob, memberPower1, memberPower2, memberPower3])
           })
+          if(localStorage.getItem(member)){
+            const memberInfoBefore = localStorage.getItem(member).split(',')
+            tdL.innerText = memberInfoBefore[0]
+            tdJ.innerText = memberInfoBefore[1]
+            tdS1.innerText = memberInfoBefore[2]
+            tdS2.innerText = memberInfoBefore[3]
+            tdS3.innerText = memberInfoBefore[4]
+          }
+            
           a.innerText = member;
           body.appendChild(tdN)
           body.appendChild(a)
