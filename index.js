@@ -8,62 +8,86 @@ async function func() {
     })
     Film.json().then(async film => {
         const members = film.guild_member;
-        const ul = document.createElement('ul');
-        const title = document.createElement('li')
-        title.style.display = 'flex'
-        title.style.height = '28px'
-        const span1 = document.createElement('span')
-        const span2 = document.createElement('span')
-        const span3 = document.createElement('span')
-        const span4 = document.createElement('span')
-        const span5 = document.createElement('span')
-        const span6 = document.createElement('span')
-        const span7 = document.createElement('span')
-        span1.style.minWidth = '150px'
-        span2.style.minWidth = '200px'
-        span3.style.minWidth = '200px'
-        span4.style.minWidth = '200px'
-        span5.style.minWidth = '200px'
-        span6.style.minWidth = '200px'
-        span7.style.minWidth = '200px'
-        span1.innerText = '닉네임';
-        span2.innerText = '수로';
-        span3.innerText = '환산복붙';
-        span4.innerText = '직업';
-        span5.innerText = '전투력';
-        span6.innerText = '헥사환산 (전투력)';
-        span7.innerText = '헥사환산 (보스300)';
-        title.appendChild(span1)
-        title.appendChild(span2)
-        title.appendChild(span3)
-        title.appendChild(span4)
-        title.appendChild(span5)
-        title.appendChild(span6)
-        title.appendChild(span7)
+        
+        const table = document.createElement('table');
+        const header = document.createElement('tr')
+        header.style.display = 'flex'
+        header.style.height = '28px'
+        const th0 = document.createElement('th')
+        const th1 = document.createElement('th')
+        const th2 = document.createElement('th')
+        const th3 = document.createElement('th')
+        const th4 = document.createElement('th')
+        const th5 = document.createElement('th')
+        const th6 = document.createElement('th')
+        const th7 = document.createElement('th')
+        const th8 = document.createElement('th')
+        th0.style.minWidth = '150px'
+        th1.style.minWidth = '150px'
+        th2.style.minWidth = '200px'
+        th3.style.minWidth = '200px'
+        th4.style.minWidth = '200px'
+        th5.style.minWidth = '200px'
+        th6.style.minWidth = '200px'
+        th7.style.minWidth = '200px'
+        th8.style.minWidth = '200px'
+        th0.innerText = '순번';
+        th1.innerText = '닉네임';
+        th2.innerText = '수로';
+        th3.innerText = '전투력 (7일최고)';
+        th4.innerText = '직업';
+        th5.innerText = '전투력';
+        th6.innerText = '헥사환산 (전투력)';
+        th7.innerText = '헥사환산 (보스300)';
+        th8.innerText = '레벨';
+        th0.style.textAlign = 'center'
+        th1.style.textAlign = 'center'
+        th2.style.textAlign = 'center'
+        th3.style.textAlign = 'center'
+        th4.style.textAlign = 'center'
+        th5.style.textAlign = 'center'
+        th6.style.textAlign = 'center'
+        th7.style.textAlign = 'center'
+        th8.style.textAlign = 'center'
+        header.appendChild(th0)
+        header.appendChild(th1)
+        header.appendChild(th8)
+        header.appendChild(th4)
+        header.appendChild(th5)
+        header.appendChild(th6)
+        header.appendChild(th7)
+        header.appendChild(th3)
 
-        ul.appendChild(title)
-        members.forEach(member => {
-          const li = document.createElement('li')
-          li.style.width = '100%'
-          li.style.height = '28px'
-          li.style.display = 'flex'
-          li.style.alignItems = 'center'
-          const a = document.createElement('a')
+        table.appendChild(header)
+        members.sort().forEach((member,i) => {
+          const body = document.createElement('tr')
+          body.style.width = '100%'
+          body.style.height = '28px'
+          body.style.display = 'flex'
+          body.style.alignItems = 'center'
+          const tdN = document.createElement('td')
+          tdN.className = `N-${member}`
+          tdN.innerText = i+1
+          tdN.style.textAlign = 'center'
+          tdN.style.minWidth = '200px'
+          const a = document.createElement('td')
           a.style.minWidth = '150px'
-          a.href = `https://maplescouter.com/info?name=${member}&preset=00000`
           a.target="_blank"
-          const spanJ = document.createElement('span')
-          spanJ.className = `job-${member}`
-          spanJ.style.minWidth = '200px'
-          const spanS1 = document.createElement('span')
-          spanS1.className = `power1-${member}`
-          spanS1.style.minWidth = '200px'
-          const spanS2 = document.createElement('span')
-          spanS2.className = `power2-${member}`
-          spanS2.style.minWidth = '200px'
-          const spanS3 = document.createElement('span')
-          spanS3.className = `power3-${member}`
-          spanS3.style.minWidth = '200px'
+          const tdJ = document.createElement('td')
+          tdJ.className = `job-${member}`
+          tdJ.style.minWidth = '200px'
+          const tdS1 = document.createElement('td')
+          tdS1.className = `power1-${member}`
+          tdS1.style.minWidth = '200px'
+          const tdS2 = document.createElement('td')
+          tdS2.className = `power2-${member}`
+          tdS2.style.minWidth = '200px'
+          const tdS3 = document.createElement('td')
+          tdS3.className = `power3-${member}`
+          tdS3.style.minWidth = '200px'
+          const tdL = document.createElement('td')
+          tdL.className = `level-${member}`
+          tdL.style.minWidth = '200px'
           const input1 = document.createElement('input')
           input1.style.minWidth = '180px'
           input1.style.margin = '0 5px'
@@ -71,33 +95,46 @@ async function func() {
           input2.style.minWidth = '180px'
           input2.style.margin = '0 5px'
           input2.style.height = '20px'
+          input2.onfocus = () => {
+            window.open(`https://maplescouter.com/info?name=${member}&preset=00000`)}
+          input2.onkeydown = e => {
+            console.log(e)
+            if(e.code === 'Enter'){
+              document.getElementsByTagName('textarea')[i+1].focus()
+            }
+          }
           input2.addEventListener('change',e => {
             const value = e.target.value?.split('\n');
+            if(value === "") return false;
             console.log(value)
+            const memberLevel = value?.[value.indexOf('|')+1].slice(3)
             const memberJob = value?.[value.indexOf('|')-1]
             const memberPower1 = value?.[value.indexOf('전투력')+3]
             const memberPower2 = value?.[value.indexOf('헥사환산')+1]
             const memberPower3 = value?.[value.indexOf('보스 380')+6]
+            const leveltag = document.getElementsByClassName(`level-${member}`)[0]
             const jobtag = document.getElementsByClassName(`job-${member}`)[0]
             const power1tag = document.getElementsByClassName(`power1-${member}`)[0]
             const power2tag = document.getElementsByClassName(`power2-${member}`)[0]
             const power3tag = document.getElementsByClassName(`power3-${member}`)[0]
-            jobtag.innerText = memberJob
-            power1tag.innerText = memberPower1
-            power2tag.innerText = memberPower2
-            power3tag.innerText = memberPower3
+            leveltag.innerText = memberLevel || ""
+            jobtag.innerText = memberJob || ""
+            power1tag.innerText = memberPower1.replace(/ |만|억/g, "") || ""
+            power2tag.innerText = memberPower2.replace(/ |만|억/g, "")  || ""
+            power3tag.innerText = memberPower3 || ""
           })
           a.innerText = member;
-          li.appendChild(a)
-          li.appendChild(input1)
-          li.appendChild(input2)
-          li.appendChild(spanJ)
-          li.appendChild(spanS1)
-          li.appendChild(spanS2)
-          li.appendChild(spanS3)
-          ul.appendChild(li);
+          body.appendChild(tdN)
+          body.appendChild(a)
+          body.appendChild(tdL)
+          body.appendChild(tdJ)
+          body.appendChild(tdS1)
+          body.appendChild(tdS2)
+          body.appendChild(tdS3)
+          body.appendChild(input2)
+          table.appendChild(body);
         });
-        document.body.appendChild(ul)
+        document.body.appendChild(table)
     });
 };
 
