@@ -131,6 +131,12 @@ async function func() {
             tdS1.innerText = memberInfoBefore[2]
             tdS2.innerText = memberInfoBefore[3]
             tdS3.innerText = memberInfoBefore[4]
+            if(memberInfoBefore[2] === '콜)' || memberInfoBefore[2] === '독)'){
+            tdJ.innerText = memberInfoBefore[1]+','+memberInfoBefore[2]
+            tdS1.innerText = memberInfoBefore[3]
+            tdS2.innerText = memberInfoBefore[4]
+            tdS3.innerText = memberInfoBefore[5]
+            }
           }
             
           a.innerText = member;
