@@ -6,6 +6,20 @@ async function func() {
     const Cut4 = await fetch('https://open.api.nexon.com/maplestory/v1/guild/basic?oguild_id=21f29948599ab4dfa7b5cfb115ea5fc4',{
         headers:{ 'x-nxopen-api-key' : apikey}
     })
+
+    function toNumber(string) {
+      const seperatedString = string.replace(' ','').split(/만|억/g)
+      const res = seperatedString.map(ele => {
+        const NumEle = Number(ele);
+        if(NumEle < 10) return `000${ele}`
+        if(NumEle < 100) return `00${ele}`
+        if(NumEle < 1000) return `0${ele}`
+        return ele
+      })
+      console.log(res.toString())
+      return Number(res.toString().replace(/ |,/g,""))
+    }
+
     Film.json().then(async film => {
         const members = film.guild_member;
         
@@ -107,10 +121,11 @@ async function func() {
             const value = e.target.value?.split('\n');
             if(value === "") return false;
             console.log(value)
+            
             const memberLevel = value?.[value.indexOf('|')+1].slice(3)
             const memberJob = value?.[value.indexOf('|')-1]
-            const memberPower1 = value?.[value.indexOf('전투력')+3].replace(/ |만|억/g, "")
-            const memberPower2 = value?.[value.indexOf('헥사환산')+1].replace(/ |만|억/g, "")
+            const memberPower1 = toNumber(value?.[value.indexOf('전투력')+3])
+            const memberPower2 = toNumber(value?.[value.indexOf('헥사환산')+1])
             const memberPower3 = value?.[value.indexOf('보스 380')+6]
             const leveltag = document.getElementsByClassName(`level-${member}`)[0]
             const jobtag = document.getElementsByClassName(`job-${member}`)[0]
