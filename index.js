@@ -11,9 +11,9 @@ async function func() {
       const seperatedString = string.replace(' ','').split(/만|억/g)
       const res = seperatedString.map(ele => {
         const NumEle = Number(ele);
-        if(NumEle < 10) return `000${ele}`
-        if(NumEle < 100) return `00${ele}`
-        if(NumEle < 1000) return `0${ele}`
+        if(NumEle < 10) return `000${NumEle}`
+        if(NumEle < 100) return `00${NumEle}`
+        if(NumEle < 1000) return `0${NumEle}`
         return ele
       })
       console.log(res.toString())
